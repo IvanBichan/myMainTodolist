@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
+import {v1} from "uuid";
 
 
 
@@ -9,10 +10,10 @@ function App() {
     //const title2 = 'What to learn -2';
 
     let [tasks, setTasks] = useState([
-        {id: 1, title: "HTML&CSS", isDone: true},
-        {id: 2, title: "JS", isDone: true},
-        {id: 3, title: "ReactJS", isDone: false},
-        {id: 4, title: "Angular", isDone: false}
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "ReactJS", isDone: false},
+        {id: v1(), title: "Angular", isDone: false}
     ])
 
     /*const tasks2 = [
@@ -20,9 +21,13 @@ function App() {
         {id: 2, title: "I am Happy", isDone: false},
         {id: 3, title: "Yo", isDone: false}
     ]*/
-    const removeTask = (taskID:number) => {
+    const removeTask = (taskID:string) => {
         setTasks(tasks.filter(el => el.id !== taskID))
     }
+    const addTask = (newTitle:string) => {
+        setTasks([{id: v1(), title: newTitle, isDone: false}, ...tasks, ])
+    }
+
 
    /*
 
@@ -47,6 +52,7 @@ function App() {
                 title={title1}
                 tasks={tasks}
                 removeTask={removeTask}
+                addTask={addTask}
                 /*filteredTask={filteredTask}*/
             />
            {/* <Todolist title={title2} tasks={tasks2} removeTask={removeTask}/>*/}
