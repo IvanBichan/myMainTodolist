@@ -57,10 +57,10 @@ function App() {
             {todolists.map((todolist) =>{
                 let afterFilterTasks= tasks[todolist.id]
                 if (todolist.filter === 'active') {
-                    afterFilterTasks=tasks[todolist.id].filter(el=>el.isDone === false)
+                    afterFilterTasks=tasks[todolist.id].filter(el=>!el.isDone)
                 }
                 if (todolist.filter === 'completed') {
-                    afterFilterTasks=tasks[todolist.id].filter(el=>el.isDone === true)
+                    afterFilterTasks=tasks[todolist.id].filter(el=>el.isDone)
                 }
                 return (
                     <Todolist
