@@ -16,6 +16,7 @@ type TodolistPropsType = {
     filter:FilterType
     removeTodolist:(todolistID:string)=>void
     editTask:(todolistID:string,taskID:string,newValue:string)=>void
+    editTodolist:(todolistID:string, newValue:string)=>void
 }
 type ObjectType = {
     id:string,
@@ -38,6 +39,12 @@ export const Todolist = (props:TodolistPropsType) => {
     const addTaskHandler = (newTitle:string) => {
         props.addTask(props.todolistID,newTitle)
     }
+    const editTodolistHandler = (newValue:string) => {
+        props.editTodolist(props.todolistID,newValue)
+    }
+    const editTaskHandler = (taskID:string,newValue:string) => {
+        props.editTask(props.todolistID,taskID,newValue)
+    }
 
 
     const onAllClickHandler = () => props.changeFilter(props.todolistID,"all");
@@ -48,21 +55,21 @@ export const Todolist = (props:TodolistPropsType) => {
 
     return (
         <div>
-            <h3>{props.title}<button onClick={removeTodolistHandler}>x</button></h3>
+            <h3>
+                <EditTableSpan title={props.title} callback={editTodolistHandler}/>
+                <button onClick={removeTodolistHandler}>x</button>
+            </h3>
             <Input callback={addTaskHandler}/>
             <ul>
-                {props.tasks.map(el => {
-                    const editTaskHandler = (newValue:string) => {
-                        props.editTask(props.todolistID,el.id,newValue)
-                    }
+                {props.tasks.map(t => {
                     return (
-                        <li key={el.id} className={el.isDone ? style.isDone : ''} >
-                            <button onClick={() => removeTaskHandler(props.todolistID, el.id)}>X</button>
-                            <input type="checkbox" checked={el.isDone}
-                                   onChange={(e) => onChangeCheckBoxHandler(props.todolistID, el.id, e.currentTarget.checked)}
+                        <li key={t.id} className={t.isDone ? style.isDone : ''} >
+                            <button onClick={() => removeTaskHandler(props.todolistID, t.id)}>X</button>
+                            <input type="checkbox" checked={t.isDone}
+                                   onChange={(e) => onChangeCheckBoxHandler(props.todolistID, t.id, e.currentTarget.checked)}
                             />
                             {/*<span>{el.title}</span>*/}
-                            <EditTableSpan editTaskHandler={editTaskHandler} title={el.title}/>
+                            <EditTableSpan callback={(newTitle)=>editTaskHandler(t.id,newTitle)} title={t.title}/>
                         </li>
                     )
                 })

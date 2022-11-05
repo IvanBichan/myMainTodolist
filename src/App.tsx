@@ -36,8 +36,12 @@ function App() {
     })
 
     const editTask = (todolistID:string,taskID:string,newValue:string ) => {
-        //setTasks({...tasks,[todolistID]:tasks[todolistID].map(el=>el.id === taskID ? {...el,title:newValue} : el)})
         setTasks({...tasks,[todolistID]:tasks[todolistID].map(el=>el.id===taskID ?{...el,title:newValue}:el)})
+    }
+    const editTodolist = (todolistID:string, newValue:string) => {
+        console.log(todolistID)
+        console.log(newValue)
+        setTodolists(todolists.map( el => el.id === todolistID? {...el,title:newValue} : el ))
     }
 
     const addTodolist = (newTitle:string) => {
@@ -91,6 +95,7 @@ function App() {
                         filter={todolist.filter}
                         removeTodolist={removeTodolist}
                         editTask={editTask}
+                        editTodolist={editTodolist}
                     />
                 )
             })}
