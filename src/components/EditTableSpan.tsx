@@ -16,10 +16,6 @@ export const EditTableSpan = (props:EditTableSpanType) => {
         setEdit(!edit)
         props.callback(newTitle)
     }
-   /* const onBlurHandler = () => {
-        onDoubleClickHandler()
-        props.editTaskHandler(newTitle)
-    }*/
 
     return (
         edit

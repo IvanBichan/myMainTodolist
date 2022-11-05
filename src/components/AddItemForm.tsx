@@ -32,12 +32,6 @@ export const AddItemForm = (props:InputType) => {
 
     return (
         <div>
-            {/*<input
-                className={error ? style.error : ''}
-                value={newTitle}
-                onKeyDown={onKeyDownHandler}
-                onChange={onChangeHandler}
-            />*/}
             <TextField id="outlined-basic" label={error? "Title is required" : "Enter text "} variant="outlined" size="small"
                        className={error ? style.error : ''}
                        value={newTitle}
@@ -45,7 +39,6 @@ export const AddItemForm = (props:InputType) => {
                        onChange={onChangeHandler}
                        error={!!error}
             />
-           {/* <button onClick={addTaskHandler}>+</button>*/}
             <Button variant="contained" color='primary' style={{maxWidth:'39px', maxHeight:'39px',minWidth:'39px', minHeight:'39px'}} onClick={addTaskHandler} >+</Button>
 
         </div>
