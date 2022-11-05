@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 
 type EditTableSpanType ={
     title:string
-    editTaskHandler:(newTitle:string)=>void
+    callback:(newTitle:string)=>void
 }
 
 export const EditTableSpan = (props:EditTableSpanType) => {
@@ -14,7 +14,7 @@ export const EditTableSpan = (props:EditTableSpanType) => {
     }
     const onClickHandler = () => {
         setEdit(!edit)
-        props.editTaskHandler(newTitle)
+        props.callback(newTitle)
     }
    /* const onBlurHandler = () => {
         onDoubleClickHandler()
