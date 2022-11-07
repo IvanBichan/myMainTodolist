@@ -6,11 +6,11 @@ import {AddItemForm} from "./components/AddItemForm";
 import ButtonAppBar from "./components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 
-export type FilterType = 'all' | 'active' | 'completed'
-type TodolistsType = {
+export type FilterValuesType = 'all' | 'active' | 'completed'
+export type TodolistType = {
     id:string
     title:string
-    filter:FilterType
+    filter:FilterValuesType
 }
 
 
@@ -19,7 +19,7 @@ function App() {
     let todolistID1 = v1()
     let todolistID2 = v1()
 
-    let [todolists, setTodolists] = useState<Array<TodolistsType>>([
+    let [todolists, setTodolists] = useState<Array<TodolistType>>([
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
@@ -37,10 +37,16 @@ function App() {
         ]
     })
 
-    const editTask = (todolistID:string,taskID:string,newValue:string ) => {
-        setTasks({...tasks,[todolistID]:tasks[todolistID].map(el=>el.id===taskID ?{...el,title:newValue}:el)})
+
+    const changeFilter = (todolistID:string, filterValue:FilterValuesType)=> {
+        setTodolists(todolists.map(el=> el.id === todolistID ? {...el,filter:filterValue}:el))
+
     }
-    const editTodolist = (todolistID:string, newValue:string) => {
+    const removeTodolist = (todolistID:string) => {
+        setTodolists(todolists.filter(el=>el.id !== todolistID))
+        delete tasks[todolistID]
+    }
+    const changeTodolistTitle = (todolistID:string, newValue:string) => {
         console.log(todolistID)
         console.log(newValue)
         setTodolists(todolists.map( el => el.id === todolistID? {...el,title:newValue} : el ))
@@ -48,10 +54,15 @@ function App() {
 
     const addTodolist = (newTitle:string) => {
         const  newTodolistID = v1()
-        const newTodolist:TodolistsType = {id: newTodolistID, title: newTitle, filter: 'all'}
+        const newTodolist:TodolistType = {id: newTodolistID, title: newTitle, filter: 'all'}
         setTodolists([newTodolist,...todolists])
         setTasks({[newTodolistID]:[],...tasks})
     }
+
+    const editTask = (todolistID:string,taskID:string,newValue:string ) => {
+        setTasks({...tasks,[todolistID]:tasks[todolistID].map(el=>el.id===taskID ?{...el,title:newValue}:el)})
+    }
+
 
     const removeTask = (todolistID:string,taskID:string) => {
         setTasks({...tasks,[todolistID]:tasks[todolistID].filter(el=>el.id !== taskID)})
@@ -64,13 +75,7 @@ function App() {
         setTasks({...tasks,[todolistID]:tasks[todolistID].map(el=>el.id === taskID ? {...el,isDone:newValue} : el)})
 
     }
-    const changeFilter = (todolistID:string, filterValue:FilterType)=> {
-        setTodolists(todolists.map(el=> el.id === todolistID ? {...el,filter:filterValue}:el))
-    }
-    const removeTodolist = (todolistID:string) => {
-        setTodolists(todolists.filter(el=>el.id !== todolistID))
-        delete tasks[todolistID]
-    }
+
 
     return (
         <div className="App">
@@ -103,7 +108,7 @@ function App() {
                                             filter={todolist.filter}
                                             removeTodolist={removeTodolist}
                                             editTask={editTask}
-                                            editTodolist={editTodolist}
+                                            editTodolist={changeTodolistTitle}
                                         />
                                     </Paper>
                                 </Grid>

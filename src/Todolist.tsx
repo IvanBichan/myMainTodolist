@@ -1,6 +1,6 @@
 import React  from "react";
 import style from './Todolist.module.css'
-import {FilterType} from "./App";
+import {FilterValuesType} from "./App";
 import {AddItemForm} from "./components/AddItemForm";
 import {EditTableSpan} from "./components/EditTableSpan";
 import IconButton from '@mui/material/IconButton';
@@ -16,8 +16,8 @@ type TodolistPropsType = {
     removeTask:(todolistID:string,taskID:string)=>void
     addTask:(todolistID:string,newTitle:string)=>void
     changeStatus:(todolistID:string,tID:string,newValue:boolean)=>void
-    changeFilter:(todolistID:string, filterValue:FilterType)=>void
-    filter:FilterType
+    changeFilter:(todolistID:string, filterValue:FilterValuesType)=>void
+    filter:FilterValuesType
     removeTodolist:(todolistID:string)=>void
     editTask:(todolistID:string,taskID:string,newValue:string)=>void
     editTodolist:(todolistID:string, newValue:string)=>void
