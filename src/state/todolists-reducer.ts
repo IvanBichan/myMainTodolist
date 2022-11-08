@@ -1,7 +1,7 @@
 import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
 
-export const todolistsReducer = (state:Array<TodolistType>,action:GeneralType) => {
+export const todolistsReducer = (state:Array<TodolistType>,action:GeneralType): Array<TodolistType> => {
     switch (action.type) {
         case "CHANGE-FILTER": {
             return state.map(el => el.id===action.payload.todolistID ? {...el, filter:action.payload.filterValue} :el)
@@ -10,8 +10,7 @@ export const todolistsReducer = (state:Array<TodolistType>,action:GeneralType) =
             return state.filter(el => el.id !== action.payload.id )
         }
         case "ADD-TODOLIST": {
-            const  newTodolistID = v1()
-            const newTodolist:TodolistType = {id: newTodolistID, title: action.payload.title, filter: 'all'}
+            const newTodolist:TodolistType = {id: action.payload.todolistID, title: action.payload.title, filter: 'all'}
             return [...state,newTodolist]
         }
         case "CHANGE-TODOLIST-TITLE": {
@@ -22,11 +21,11 @@ export const todolistsReducer = (state:Array<TodolistType>,action:GeneralType) =
     }
 }
 
-type GeneralType = changeFilterACType | removeTodolistACType | addTodolistACACType | changeTodolistTitleACType;
+type GeneralType = changeFilterACType | removeTodolistACType | addTodolistACType | changeTodolistTitleACType;
 
 type changeFilterACType = ReturnType<typeof changeFilterAC>
-type removeTodolistACType = ReturnType<typeof removeTodolistAC>
-type addTodolistACACType = ReturnType<typeof addTodolistAC>
+export type removeTodolistACType = ReturnType<typeof removeTodolistAC>
+export type addTodolistACType = ReturnType<typeof addTodolistAC>
 type changeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
 
 export const changeFilterAC = (todolistID:string, filterValue:FilterValuesType) => {
@@ -50,7 +49,8 @@ export const addTodolistAC = (newTitle:string) => {
     return {
         type: "ADD-TODOLIST",
         payload: {
-            title:newTitle
+            title:newTitle,
+            todolistID: v1()
         }
     } as const
 }
